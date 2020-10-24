@@ -399,10 +399,12 @@ contract Passport {
     }
     
     function unlock(bytes memory _proofData) public {
-        // address x = 0x0000000000000000000000000000000000010000;
-        // (bool success, bytes memory _) = x.staticcall(_proofData);
-        // require(success == true, "MMR proof error");
-        
+	// Validate mmr proof and transaction receipt
+        address x = 0x0000000000000000000000000000000000010000;
+        (bool success, bytes memory _) = x.staticcall(_proofData);
+        require(success == true, "MMR proof error");
+
+	// decode proof data and generate user info
         (address _from, address _to, uint256 _value, bytes32 _tx, string memory _id, string memory _nation, string memory _name, string memory _address, bytes memory _proof) = abi.decode(_proofData, (address, address, uint256, bytes32, string, string, string, string, bytes));
         
         Identity storage info =  userInfo[_from];

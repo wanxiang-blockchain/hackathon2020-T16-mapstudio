@@ -394,6 +394,12 @@ contract User {
     }
     
     mapping(address => Identity) public userInfo;
+
+    event LockToken(
+        // address indexed token,
+        address indexed sender,
+        uint256 amount
+    );
     
     constructor() public {
     }
@@ -408,6 +414,7 @@ contract User {
     }
     
     function lock (string memory _id, string memory _nation, string memory _name, string memory _address) public {
+	emit LockToken(msg.sender, msg.value);
     }
 }
 
